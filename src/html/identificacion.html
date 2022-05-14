@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
     <div class="divModales">
         <div id="cardLogin" class="modalPersonal animate__animated">
             <div class="headModal">
@@ -23,11 +24,11 @@
                 <div class="titleModal">
                     <span>Inicia sesion</span>
                 </div>
-                <div class="bodyModal">
-                    <input type="text" class="inputAunt" placeholder="Correo/Nombre de usuario">
-                    <input type="password" class="inputAunt" placeholder="Contraseña">
-                    <button class="btn btn-success btn-lg btnIniciar">Iniciar</button>
-                </div>
+                <form action="/auth" method="post" class="bodyModal" target="hiddenFrame" >
+                    <input type="email" name="correo"  class="inputAunt" placeholder="Correo/Nombre de usuario" autofocus>
+                    <input type="password" name="password"  class="inputAunt" placeholder="Contraseña">
+                    <button type="submit" class="btn btn-success btn-lg btnIniciar">Iniciar</button>
+                </form>
                 <div class="fooderModal">
                     <span>¿No estas registrado? haz clic <span id="goRegister" class="go">aquí</span></span>
                 </div>
@@ -42,13 +43,13 @@
                 <div class="titleModal">
                     <span>Registrate</span>
                 </div>
-                <div class="bodyModal">
-                    <input type="text" class="inputAunt" placeholder="Nombre de usuario">
-                    <input type="text" class="inputAunt" placeholder="Correo">
-                    <input type="password" class="inputAunt" placeholder="Contraseña">
-                    <input type="password" class="inputAunt" placeholder="Confirmar contraseña">
-                    <button class="btn btn-success btn-lg btnIniciar">Registrarse</button>
-                </div>
+                <form action="/auth" method="post" class="bodyModal" target="hiddenFrame">
+                    <input name="nombre" type="text" class="inputAunt" placeholder="Nombre de usuario">
+                    <input name="correo" type="email" class="inputAunt" placeholder="Correo">
+                    <input name="password" type="password" class="inputAunt" placeholder="Contraseña">
+                    <input name="confPassword" type="password" class="inputAunt" placeholder="Confirmar contraseña">
+                    <button type="submit" class="btn btn-success btn-lg btnIniciar" >Registrarse</button>
+                </form>
                 <div class="fooderModal">
                     <span>¿Ya tienes cuenta? haz clic <span id="goLogin" class="go">aquí</span></span>
                 </div>

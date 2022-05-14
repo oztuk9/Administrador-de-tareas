@@ -3,6 +3,7 @@ const goLogin = document.querySelector('#goLogin')
 const cardLogin = document.querySelector('#cardLogin')
 const cardRegister = document.querySelector('#cardRegister')
 
+
 goRegister.addEventListener('click',e=>{
     cardLogin.classList.remove('animate__flipInY')
     cardRegister.classList.remove('animate__flipOutY')
@@ -24,3 +25,11 @@ goLogin.addEventListener('click',e=>{
         cardLogin.classList.add('animate__flipInY')
     }, 500);
 })
+
+const prueba = (param)=>{
+    console.log(param);
+}
+
+module.exports = {
+    prueba
+}
