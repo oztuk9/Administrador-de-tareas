@@ -13,9 +13,11 @@ const pool = mysql.createPool(
 )
 
 pool.getConnection((err,connection) =>{
-    if(connection) connection.release();
-    console.log('connected');
-    return
+    if(connection){ connection.release();
+    console.log('data base connected');
+    return}else{
+        console.log('data base desconnected');
+    }
 })
 
 module.exports={

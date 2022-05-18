@@ -112,6 +112,10 @@ body {
   width: 80%;
 }
 
+#sidebarUsuario {
+  width: 100%;
+}
+
 .letasMenu {
   margin-left: 15px;
   font-size: x-large;

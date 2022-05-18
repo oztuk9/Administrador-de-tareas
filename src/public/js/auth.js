@@ -4,7 +4,7 @@ const cardLogin = document.querySelector('#cardLogin')
 const cardRegister = document.querySelector('#cardRegister')
 
 
-goRegister.addEventListener('click',e=>{
+goRegister.addEventListener('click', e => {
     cardLogin.classList.remove('animate__flipInY')
     cardRegister.classList.remove('animate__flipOutY')
     cardLogin.classList.add('animate__flipOutY')
@@ -15,7 +15,7 @@ goRegister.addEventListener('click',e=>{
     }, 500);
 })
 
-goLogin.addEventListener('click',e=>{
+goLogin.addEventListener('click', e => {
     cardLogin.classList.remove('animate__flipOutY')
     cardLogin.classList.remove('animate__flipInY')
     cardRegister.classList.add('animate__flipOutY')
@@ -25,11 +25,3 @@ goLogin.addEventListener('click',e=>{
         cardLogin.classList.add('animate__flipInY')
     }, 500);
 })
-
-const prueba = (param)=>{
-    console.log(param);
-}
-
-module.exports = {
-    prueba
-}
