@@ -24,9 +24,9 @@
                 <div class="titleModal">
                     <span>Inicia sesion</span>
                 </div>
-                <form action="/auth" method="post" class="bodyModal" >
-                    <input type="email" name="correo"  class="inputAunt" placeholder="Correo/Nombre de usuario" autofocus>
-                    <input type="password" name="password"  class="inputAunt" placeholder="Contraseña">
+                <form action="/auth/signin" method="post" class="bodyModal">
+                    <input name="email" type="email"  class="inputAunt" placeholder="Correo/Nombre de usuario" autofocus>
+                    <input name="password" type="password"   class="inputAunt" placeholder="Contraseña">
                     <button type="submit" class="btn btn-success btn-lg btnIniciar">Iniciar</button>
                 </form>
                 <div class="fooderModal">
@@ -43,7 +43,7 @@
                 <div class="titleModal">
                     <span>Registrate</span>
                 </div>
-                <form action="/auth/singin" method="post" class="bodyModal">
+                <form action="/auth/signup" method="post" class="bodyModal">
                     <input name="username" type="text" class="inputAunt" placeholder="Nombre de usuario">
                     <input name="email" type="email" class="inputAunt" placeholder="Correo">
                     <input name="password" type="password" class="inputAunt" placeholder="Contraseña">

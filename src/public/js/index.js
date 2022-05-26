@@ -1,8 +1,20 @@
-const btnOpenSidebar = document.getElementById('btnOpenSidebar')
-const sidebar = document.getElementById('sidebar')
+/*Sidebar*/
+
+/*Buttons*/
 const closeSidebar = document.getElementById('closeSidebar')
+const btnOpenSidebar = document.getElementById('btnOpenSidebar')
+
+/*Inputs*/
+
+
+/*Selects*/
+
+
+/*Frames*/
+const sidebar = document.getElementById('sidebar')
 const bodySidebar = document.getElementById('bodySidebar')
 const sidebarUsuario = document.getElementById('sidebarUsuario')
+
 
 sidebarUsuario.addEventListener('click',e => {
     openModal('Usuario');
@@ -16,17 +28,19 @@ addEventListener('DOMContentLoaded', e => {
     addCloseModalEvent();
 })
 
+/*Eventos*/
+
 const addEventSidebar = () => {
     const tareasMenu = document.getElementById('menu-element-1')
     const materiaMenu = document.getElementById('menu-element-2')
     const docenteMenu = document.getElementById('menu-element-3')
-    const edificiosMenu = document.getElementById('menu-element-4')
-    const aulasMenu = document.getElementById('menu-element-5')
+    const aulasMenu  = document.getElementById('menu-element-4')
+    const edificiosMenu= document.getElementById('menu-element-5')
     const addTareasMenu = document.getElementById('addButton1')
     const addMateriaMenu = document.getElementById('addButton2')
     const addDocenteMenu = document.getElementById('addButton3')
-    const addEdificiosMenu = document.getElementById('addButton4')
-    const addAulasMenu = document.getElementById('addButton5')
+    const addAulasMenu  = document.getElementById('addButton4')
+    const addEdificiosMenu= document.getElementById('addButton5')
 
 
     console.log(tareasMenu);
@@ -48,26 +62,26 @@ const addEventSidebar = () => {
     })
 
     addTareasMenu.addEventListener('click', e => {
-        openModal('Tareas');
+        openModal('AddTareas');
     })
     addMateriaMenu.addEventListener('click', e => {
-        openModal('Materias');
+        openModal('AddMaterias');
     })
     addDocenteMenu.addEventListener('click', e => {
-        openModal('Docentes');
+        openModal('AddDocentes');
     })
     addEdificiosMenu.addEventListener('click', e => {
-        openModal('Edificios')
+        openModal('AddEdificios')
     })
     addAulasMenu.addEventListener('click', e => {
-        openModal('Aulas')
+        openModal('AddAulas')
     })
 }
 
 const openModal = (modalName) => {
     console.log('fue clicado en ',modalName);
     const modal = document.querySelector('.divModales')
-    const modalAddAula = document.querySelector('#modalAdd'+modalName)
+    const modalAddAula = document.querySelector('#modal'+modalName)
     modal.classList.remove('no-visible')
     modalAddAula.classList.remove('no-visible')
     modalAddAula.classList.remove('animate__backOutUp')
@@ -172,8 +186,8 @@ const llenarArrayElementosMenu = () => {
     jsonMenu.push(tareas)
     jsonMenu.push(materia)
     jsonMenu.push(docente)
-    jsonMenu.push(edificios)
     jsonMenu.push(aulas)
+    jsonMenu.push(edificios)
     return jsonMenu
 }
 
@@ -201,3 +215,19 @@ const cargarElementosSidebar = () => {
     });
 
 }
+
+/*Modales*/
+
+/*Buttons*/
+
+
+/*Inputs*/
+
+
+/*Selects*/
+
+
+/*Frames*/
+
+
+/*Eventos*/

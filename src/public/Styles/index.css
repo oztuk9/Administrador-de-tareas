@@ -6,6 +6,24 @@ body {
   background-color: #191a1f;
 }
 
+.simpleText {
+  color: #ffffff;
+  font-size: x-large;
+  padding-right: 10px;
+}
+
+.inputs {
+  position: absolute;
+  right: 0;
+  width: 170px;
+  height: 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
 .divModales {
   position: absolute;
   display: -webkit-box;
@@ -132,8 +150,16 @@ body {
   -webkit-box-shadow: white 0px 0px 10px;
           box-shadow: white 0px 0px 10px;
   padding: 20px;
-  height: 700px;
-  width: 900px;
+  width: 360px;
+}
+
+.headModal {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 15px;
+  padding-right: 40px;
+  padding-left: 0px;
 }
 
 .closeModal {
@@ -146,8 +172,65 @@ body {
   color: #ffffff;
 }
 
+.bodyModal {
+  margin-top: 70px;
+  position: relative;
+}
+
+.fooderModal {
+  position: relative;
+  padding-top: 20px;
+}
+
+.addButton {
+  float: right;
+}
+
+.rowFiles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.colorpick-eyedropper-input-trigger {
+  width: 25px;
+  height: 25px;
+}
+
+#descripcionTarea {
+  width: 100%;
+}
+
+#modalAddMaterias {
+  width: 400px;
+}
+
+#modalAddTareas {
+  width: 400px;
+}
+
+.fechaTarea {
+  margin-left: 10px;
+}
+
+.alertas {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 /*Responsibe*/
-@media only screen and (max-height: 800px) {
+@media only screen and (max-height: 600px) {
   .divModales {
     place-items: initial;
   }
