@@ -6,6 +6,10 @@ body {
   background-color: #191a1f;
 }
 
+textarea {
+  width: 100%;
+}
+
 .simpleText {
   color: #ffffff;
   font-size: x-large;
@@ -16,6 +20,18 @@ body {
   position: absolute;
   right: 0;
   width: 170px;
+  height: 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.littlerInputs {
+  position: absolute;
+  right: 0;
+  width: 150px;
   height: 30px;
   border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -145,6 +161,7 @@ body {
 
 /*Modales*/
 .modalPersonal {
+  position: relative;
   background-color: #191a1f;
   border-radius: 10px;
   -webkit-box-shadow: white 0px 0px 10px;
@@ -154,15 +171,16 @@ body {
 }
 
 .headModal {
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
-  padding: 15px;
-  padding-right: 40px;
-  padding-left: 0px;
 }
 
 .closeModal {
+  float: right;
+}
+
+.closeSubModal {
   float: right;
 }
 
@@ -186,6 +204,26 @@ body {
   float: right;
 }
 
+.addFecha {
+  border-color: transparent;
+  padding: 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.removeJSON {
+  border-color: transparent;
+  padding: 0;
+  border-radius: 10px;
+  margin-left: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
 .rowFiles {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -201,10 +239,6 @@ body {
 .colorpick-eyedropper-input-trigger {
   width: 25px;
   height: 25px;
-}
-
-#descripcionTarea {
-  width: 100%;
 }
 
 #modalAddMaterias {

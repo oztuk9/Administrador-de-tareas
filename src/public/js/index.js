@@ -1,22 +1,59 @@
+
 /*Sidebar*/
 
 /*Buttons*/
 const closeSidebar = document.getElementById('closeSidebar')
 const btnOpenSidebar = document.getElementById('btnOpenSidebar')
+const btnAddHorarioMateria = document.getElementById('addHorarioMateria')
+const btnCloseFechaMateria = document.getElementById('closeFechaMateria')
+const btnAgregarFechaHorario = document.getElementById('btnAgregarFechaHorario')
+const btnEliminarFechaMateria = document.getElementById('eliminarFechaMateria')
+const btnCreateMateria = document.getElementById('btnCreateMateria')
+const buttonAddSubtarea = document.getElementById('buttonAddSubtarea')
+const closeSubtarea = document.getElementById('closeSubtarea')
+const btnAgregarSubtarea = document.getElementById('btnAgregarSubtarea')
 
 /*Inputs*/
+//Materia
+const inputNombreMateria = document.getElementById('inputNombreMateria')
+const inputClaveMateria = document.getElementById('inputClaveMateria')
+const inputColorMateria = document.getElementById('inputColorMateria')
+
+//Tareas
+const inputNombreSubtarea = document.getElementById('inputNombreSubtarea')
+const inputDescripcionSubtarea = document.getElementById('inputDescripcionSubtarea')
 
 
 /*Selects*/
+const selectDiaFechaMateria = document.getElementById('selectDiaFechaMateria')
+const selectHoraFechaMateria = document.getElementById('selectHoraFechaMateria')
+const selectMinutoFechaMateria = document.getElementById('selectMinutoFechaMateria')
+const selectHorario = document.getElementById('selectHorario')
+const selectDocente = document.getElementById('selectDocente')
+const selectAulaAddMateria = document.getElementById('selectAulaAddMateria')
+const selectEdificioAddMateria = document.getElementById('selectEdificioAddMateria')
+
+/*TextAreas*/
+
+const textAreaDescripcionSubtarea = document.getElementById('textAreaDescripcionSubtarea')
+
+//Tareas
+const selectSubtareas = document.getElementById('selectSubtareas')
 
 
-/*Frames*/
+/*Frames/Modales*/
 const sidebar = document.getElementById('sidebar')
 const bodySidebar = document.getElementById('bodySidebar')
 const sidebarUsuario = document.getElementById('sidebarUsuario')
+const modalAddFechaMateria = document.getElementById('modalAddFechaMateria')
 
+/*Variables globales */
+let fechaMateriaJSON = []
+let arrayAulas = []
+let finalArrayQuery = []
+let arraySubtareas = []
 
-sidebarUsuario.addEventListener('click',e => {
+sidebarUsuario.addEventListener('click', e => {
     openModal('Usuario');
 })
 
@@ -26,6 +63,9 @@ addEventListener('DOMContentLoaded', e => {
     cargarElementosSidebar()
     addEventSidebar()
     addCloseModalEvent();
+    fillSelectsDateSubjects()
+    obtenerDatosSelectCargadoConDB()
+    fillAulas()
 })
 
 /*Eventos*/
@@ -34,13 +74,13 @@ const addEventSidebar = () => {
     const tareasMenu = document.getElementById('menu-element-1')
     const materiaMenu = document.getElementById('menu-element-2')
     const docenteMenu = document.getElementById('menu-element-3')
-    const aulasMenu  = document.getElementById('menu-element-4')
-    const edificiosMenu= document.getElementById('menu-element-5')
+    const aulasMenu = document.getElementById('menu-element-4')
+    const edificiosMenu = document.getElementById('menu-element-5')
     const addTareasMenu = document.getElementById('addButton1')
     const addMateriaMenu = document.getElementById('addButton2')
     const addDocenteMenu = document.getElementById('addButton3')
-    const addAulasMenu  = document.getElementById('addButton4')
-    const addEdificiosMenu= document.getElementById('addButton5')
+    const addAulasMenu = document.getElementById('addButton4')
+    const addEdificiosMenu = document.getElementById('addButton5')
 
 
     console.log(tareasMenu);
@@ -78,20 +118,35 @@ const addEventSidebar = () => {
     })
 }
 
+/*Modales*/
+
 const openModal = (modalName) => {
-    console.log('fue clicado en ',modalName);
-    const modal = document.querySelector('.divModales')
-    const modalAddAula = document.querySelector('#modal'+modalName)
+    console.log('fue clicado en ', modalName);
+    const modalContenedor = document.querySelector('.divModales')
+    const modal = document.querySelector('#modal' + modalName)
+    modalContenedor.classList.remove('no-visible')
     modal.classList.remove('no-visible')
-    modalAddAula.classList.remove('no-visible')
-    modalAddAula.classList.remove('animate__backOutUp')
-    modalAddAula.classList.add('animate__backInDown')
+    modal.classList.remove('animate__backOutUp')
+    modal.classList.add('animate__backInDown')
+}
+
+const openSubModal = (modalName, subModalName) => {
+    const modal = document.querySelector('#modal' + modalName)
+    const subModal = document.querySelector('#subModal' + subModalName)
+    modal.classList.remove('animate__backInDown')
+    modal.classList.add('animate__backOutUp')
+    setTimeout(function () {
+        modal.classList.add('no-visible')
+        subModal.classList.remove('no-visible')
+        subModal.classList.remove('animate__backOutUp')
+        subModal.classList.add('animate__backInDown')
+    }, 500);
 }
 
 const addCloseModalEvent = () => {
-    let count = 0 
+    let count = 0
     const botones = document.querySelectorAll('.closeModal')
-    const modalNames = ['Usuario','Tareas','Materias','Docentes','Edificios','Aulas']
+    const modalNames = ['Usuario', 'AddTareas', 'AddMaterias', 'AddDocentes', 'AddEdificios', 'AddAulas']
     console.log(botones);
     botones.forEach(e => {
         console.log(e);
@@ -105,9 +160,9 @@ const addCloseModalEvent = () => {
     })
 }
 
-const closeModal = (modalName) =>{
+const closeModal = (modalName) => {
     const modal = document.querySelector('.divModales')
-    const modalAddAula = document.querySelector('#modalAdd'+modalName)
+    const modalAddAula = document.querySelector('#modal' + modalName)
     modalAddAula.classList.remove('animate__backInDown')
     modalAddAula.classList.add('animate__backOutUp')
     setTimeout(function () {
@@ -116,6 +171,20 @@ const closeModal = (modalName) =>{
     }, 500);
 }
 
+const closeSubModal = (modalName, subModalName) => {
+    const modal = document.querySelector('#modal' + modalName)
+    const subModal = document.querySelector('#subModal' + subModalName)
+    subModal.classList.remove('animate__backInDown')
+    subModal.classList.add('animate__backOutUp')
+    setTimeout(function () {
+        subModal.classList.add('no-visible')
+        modal.classList.remove('no-visible')
+        modal.classList.remove('animate__backOutUp')
+        modal.classList.add('animate__backInDown')
+    }, 500);
+}
+
+/*Sidebar*/
 
 btnOpenSidebar.addEventListener('click', e => {
     btnOpenSidebar.classList.add('no-visible')
@@ -215,6 +284,193 @@ const cargarElementosSidebar = () => {
     });
 
 }
+
+/*Nueva materia*/
+
+btnAddHorarioMateria.addEventListener('click', e => {
+    openSubModal('AddMaterias', 'AddFechaMateria')
+})
+
+btnCloseFechaMateria.addEventListener('click', e => {
+    closeSubModal('AddMaterias', 'AddFechaMateria')
+})
+
+btnAgregarFechaHorario.addEventListener('click', e => {
+    newFechaMateria = {
+        Dia: selectDiaFechaMateria.value,
+        Hora: selectHoraFechaMateria.value + ":" + selectMinutoFechaMateria.value
+    }
+    fechaMateriaJSON.push(newFechaMateria)
+    console.log(fechaMateriaJSON);
+    console.log(JSON.stringify(fechaMateriaJSON));
+    fillSelectHorario()
+    closeSubModal('AddMaterias', 'AddFechaMateria')
+})
+
+
+//Llenar selects fecha Materia
+
+const fillSelectsDateSubjects = () => {
+    let dia = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
+    for (let i = 0; i < dia.length; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = dia[i];
+        selectDiaFechaMateria.add(option);
+
+    }
+    for (let i = 0; i < 24; i++) {
+        var option = document.createElement("option");
+        if (i <= 9) {
+            option.value = '0' + i;
+            option.text = '0' + i;
+        } else {
+            option.value = i;
+            option.text = i;
+        }
+        selectHoraFechaMateria.add(option);
+    }
+
+    for (let i = 0; i < 59; i++) {
+        var option = document.createElement("option");
+        if (i < 9) {
+            option.value = '0' + (i + 1);
+            option.text = '0' + (i + 1);
+        } else {
+            option.value = i + 1;
+            option.text = i + 1;
+        }
+        selectMinutoFechaMateria.add(option);
+    }
+}
+
+//Agregar nueva fecha al 
+
+const fillSelectHorario = () => {
+    selectHorario.innerHTML = ''
+    let count = 0
+    fechaMateriaJSON.forEach(e => {
+        let dia
+        switch (e.Dia) {
+            case "0":
+                dia = "Lunes"
+                break;
+            case "1":
+                dia = "Martes"
+                break;
+            case "2":
+                dia = "Miercoles"
+                break;
+            case "3":
+                dia = "Jueves"
+                break;
+            case "4":
+                dia = "Viernes"
+                break;
+            case "5":
+                dia = "Sabado"
+                break;
+            case "6":
+                dia = "Domingo"
+                break;
+            default:
+                break;
+        }
+        var option = document.createElement("option");
+        option.value = count;
+        option.text = dia + "-" + e.Hora;
+        selectHorario.add(option)
+        ++count
+    })
+}
+
+btnEliminarFechaMateria.addEventListener('click', e => {
+    console.log("Preciono eliminar");
+    console.log(selectHorario.value);
+    fechaMateriaJSON.splice(selectHorario.value, 1)
+    fillSelectHorario()
+})
+
+//Rellenar select de aulas dependiendo que edificio seleccione
+const obtenerDatosSelectCargadoConDB = () => {
+    console.log(selectAulaAddMateria.length);
+    for (let i = 0; i < selectAulaAddMateria.length; i++) {
+        let aula = {
+            "ID": selectAulaAddMateria.options[i].attributes[0].value,
+            "ID_Edificio": selectAulaAddMateria.options[i].attributes[1].value,
+            "Nombre": selectAulaAddMateria.options[i].attributes[2].value
+        }
+        console.log("ID: ", selectAulaAddMateria.options[i].attributes[0].value, " ID_Edificio: ", selectAulaAddMateria.options[i].attributes[1].value, " Nombre: ", selectAulaAddMateria.options[i].attributes[2].value);
+        arrayAulas.push(aula)
+    }
+    console.log(arrayAulas);
+}
+
+const fillAulas = () => {
+    selectAulaAddMateria.innerHTML = ""
+    console.log(selectEdificioAddMateria.value);
+    for (let i = 0; i < arrayAulas.length; i++) {
+        if (arrayAulas[i].ID_Edificio == selectEdificioAddMateria.value) {
+            console.log(arrayAulas[i]);
+            console.log(arrayAulas[i].ID);
+            console.log(arrayAulas[i].Nombre);
+            var option = document.createElement("option");
+            option.value = arrayAulas[i].ID;
+            option.text = arrayAulas[i].Nombre;
+            selectAulaAddMateria.add(option)
+        }
+    }
+}
+
+selectEdificioAddMateria.addEventListener('change', e => {
+    fillAulas()
+})
+
+/*Nueva tarea*/
+
+buttonAddSubtarea.addEventListener('click', e => {
+    openSubModal('AddTareas', 'AddSubTarea')
+})
+
+closeSubtarea.addEventListener('click', e => {
+    closeSubModal('AddTareas', 'AddSubTarea')
+})
+
+btnAgregarSubtarea.addEventListener('click', e => {
+    newSubtarea = {
+        Nombre: inputNombreSubtarea.value,
+        Descripcion: inputDescripcionSubtarea.value
+    }
+    arraySubtareas.push(newSubtarea)
+    console.log(arraySubtareas);
+    console.log(JSON.stringify(arraySubtareas));
+    fillSelectSubtareas()
+    textAreaDescripcionSubtarea.value = arraySubtareas[selectSubtareas.value].Descripcion
+    closeSubModal('AddTareas', 'AddSubTarea')
+    console.log("Se tienen que limpiar los inputs");
+    inputNombreSubtarea.value = ""
+    inputDescripcionSubtarea.value = ""
+})
+
+const fillSelectSubtareas = () => {
+    selectSubtareas.innerHTML = ''
+    let count = 0
+    arraySubtareas.forEach(e => {
+        var option = document.createElement("option");
+        option.value = count;
+        option.text = e.Nombre;
+        selectSubtareas.add(option)
+        ++count
+    })
+}
+
+selectSubtareas.addEventListener('change',e =>{
+    console.log(e);
+    textAreaDescripcionSubtarea.value = arraySubtareas[selectSubtareas.value].Descripcion
+}) 
+
+
+
 
 /*Modales*/
 

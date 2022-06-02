@@ -43,12 +43,14 @@
         <!--Usuario-->
 
         <div class="div-elementos">
-            <div id="sidebarUsuario" class="elentos"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
-                    class="bi bi-person-circle" viewBox="0 0 16 16">
+            <div id="sidebarUsuario" class="elentos"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"
+                    fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     <path fill-rule="evenodd"
                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg><span class="letasMenu">Usuario</span>
+                </svg><span class="letasMenu">
+                    <%=user.Nombre%>
+                </span>
             </div>
         </div>
         <div id="bodySidebar">
@@ -66,240 +68,380 @@
             </svg></button>
     </nav>
 
-        <!--Alertas-->
-        <%if(Success.length>0){%>
-            <div class="container alertas">
-                <div class="row alertas">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>
-                                <%=Success%>
-                            </strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <!--Alertas-->
+    <%if(Success.length>0){%>
+        <div class="container alertas">
+            <div class="row alertas">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>
+                        <%=Success%>
+                    </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <%}%>
+
+            <!--Modales-->
+
+
+
+            <div class="divModales no-visible">
+
+
+                <div id="modalUsuario" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>
+                                <%=user.Nombre%>
+                            </span>
                         </div>
+                        <button id="closeModalUsuario" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bodyModal">
+                        <span>BODY MODAL</span>
+                    </div>
+                    <div class="fooderModal">
+                        <a href="/logout">
+                            <button class="btn btn-danger">Cerrar sesión</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <%}%>
-
-    <!--Modales-->
-
-
-
-    <div class="divModales no-visible">
-
-
-        <div id="modalUsuario" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Usuario</span>
-                </div>
-                <button id="closeModalUsuario" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <span>BODY MODAL</span>
-            </div>
-            <div class="fooderModal">
-                <a href="/logout">
-                    <button class="btn btn-danger">Cerrar sesión</button>
-                 </a>
-            </div>
-        </div>
 
 
-        <div id="modalAddTareas" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Nueva Tarea</span>
+                <div id="modalAddTareas" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nueva Tarea</span>
+                        </div>
+                        <button id="closeModalTareas" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bodyModal">
+                        <div class="rowFiles">
+                            <span class="simpleText">Nombre:</span><input type="text" class="littlerInputs">
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Descripcion:</span>
+                        </div>
+                        <div class="rowFiles">
+                            <textarea name="descripcionTarea" id="descripcionTarea" rows="5"></textarea>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Color:</span><input type="color" class="littlerInputs"
+                                value="#ffffff">
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Fecha:</span>
+                            <button id="addFechaTarea" class="btn btn-secondary "><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-calendar-week" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                    <path
+                                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                </svg></button>
+                            <span class="simpleText fechaTarea">Sin fecha</span>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Materia:</span><select name="docente"
+                                class="littlerInputs"></select>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Subtareas:</span>
+                            <button id="buttonAddSubtarea" class="btn btn-outline-success addFecha">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                    class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </button>
+                            <button type="button" id="eliminarSubtarea" class="btn btn-outline-danger removeJSON">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                    class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                </svg>
+                            </button>
+                            <select name="docente" id="selectSubtareas" class="littlerInputs"></select>
+                        </div>
+                        <div class="rowFiles">
+                            <textarea name="descripcionTarea" id="textAreaDescripcionSubtarea" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="fooderModal">
+                        <button class="btn btn-success addButton">Agregar</button>
+                    </div>
                 </div>
-                <button id="closeModalTareas" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <div class="rowFiles">
-                    <span class="simpleText">Nombre:</span><input type="text" class="inputs">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Descripcion:</span>
-                </div>
-                <div class="rowFiles">
-                    <textarea name="descripcionTarea" id="descripcionTarea" rows="5"></textarea>
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Color:</span><input type="color" class="inputs" value="#ffffff">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Fecha:</span>
-                    <button id="addFechaTarea" class="btn btn-secondary add-button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
-                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                      </svg></button>
-                      <span class="simpleText fechaTarea">Sin fecha</span>
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Materia:</span><select name="docente" class="inputs"></select>
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Subtareas:</span> 
-                    <button id="buttonAddSubtarea" class="btn btn-outline-success add-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30"
-                        height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                        <path
-                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                        </svg>
-                    </button>
-                    <select name="docente" class="inputs"></select>
-                </div>
-                <div class="rowFiles">
-                    <textarea name="descripcionTarea" id="descripcionTarea" rows="5"></textarea>
-                </div>
-            </div>
-            <div class="fooderModal">
-                <button class="btn btn-success addButton">Agregar</button>
-            </div>
-        </div>
-
-        <div id="modalAddMaterias" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Nueva Materia</span>
-                </div>
-                <button id="closeModalMateria" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <div class="rowFiles">
-                    <span class="simpleText">Nombre:</span><input type="text" class="inputs">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Clave:</span><input type="text" class="inputs">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Color:</span><input type="color" class="inputs" value="#ffffff">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Horario:</span>
-
-                    <button id="addHorarioMateria" class="btn btn-secondary add-button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
-                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                      </svg></button>
-                      <select name="edificio" id="selectHorario" class="inputs"></select>
-                </div>  
-                <div class="rowFiles">
-                    <span class="simpleText">Docente:</span><select name="docente" id="selectDocente" class="inputs"></select>
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Edificio:</span><select name="edificio" id="selectEdificioAddMateria" class="inputs"></select>
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Aula:</span><select name="edificio" id="selectAula" class="inputs"></select>
-                </div>
-            </div>
-            <div class="fooderModal">
-                <button class="btn btn-success addButton">Agregar</button>
-            </div>
-        </div>
-
-
-        <div id="modalAddDocentes" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Nuevo Docente</span>
-                </div>
-                <button id="closeModalDocentes" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <div class="rowFiles">
-                    <span class="simpleText">Nombre:</span><input type="text" class="inputs">
-                </div>
-            </div>
-            <div class="fooderModal">
-                <button class="btn btn-success addButton">Agregar</button>
-            </div>
-        </div>
 
 
 
-        <form action="/home/addEdificio" method="post" id="modalAddEdificios" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Nuevo Edificio</span>
+                <div id="subModalAddSubTarea" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Agregar Subtarea</span>
+                        </div>
+                        <button id="closeSubtarea" class="btn btn-outline-danger closeSubModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bodyModal">
+                        <div class="rowFiles">
+                            <span class="simpleText">Nombre:</span><input type="text" id="inputNombreSubtarea" class="inputs">
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Descripcion:</span>
+                        </div>
+                        <div class="rowFiles">
+                            <textarea name="descripcionTarea" id="inputDescripcionSubtarea" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="fooderModal">
+                        <button type="button" id="btnAgregarSubtarea"
+                            class="btn btn-success addButton">Agregar</button>
+                    </div>
                 </div>
-                <button id="closeModalEdificios" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <div class="rowFiles">
-                    <span class="simpleText">Nombre:</span><input id="nombreEdificio " name="nombre" type="text" class="inputs">
-                </div>
-            </div>
-            <div class="fooderModal">
-                <button type="submit" class="btn btn-success addButton">Agregar</button>
-            </div>
-        </form>
-
-        <div id="modalAddAulas" class="modalPersonal animate__animated  no-visible">
-            <div class="headModal">
-                <div class="titleModal">
-                    <span>Nueva Aula</span>
-                </div>
-                <button id="closeModalAulas" class="btn btn-outline-danger closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="bodyModal">
-                <div class="rowFiles">
-                    <span class="simpleText">Nombre:</span><input type="text" class="inputs">
-                </div>
-                <div class="rowFiles">
-                    <span class="simpleText">Edificio:</span><select name="edificio" id="selectEdificio" class="inputs"></select>
-                </div>
-            </div>
-            <div class="fooderModal">
-                <button class="btn btn-success addButton">Agregar</button>
-            </div>
-        </div>
-    </div>
 
 
-    <!--Sripts-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-    <script src="/js/index.js"></script>
+
+
+
+                <div id="modalAddMaterias" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nueva Materia</span>
+                        </div>
+                        <button id="closeModalMateria" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <div class="bodyModal">
+                            <div class="rowFiles">
+                                <span class="simpleText">Nombre:</span><input type="text" id="inputNombreMateria"
+                                    class="inputs">
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Clave:</span><input type="text" id="inputClaveMateria"
+                                    class="inputs">
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Color:</span><input type="color" id="inputColorMateria"
+                                    class="inputs" value="#ffffff">
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Horario:</span>
+                                <button type="button" id="addHorarioMateria"
+                                    class="btn btn-outline-success add-button addFecha">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                </button>
+                                <button type="button" id="eliminarFechaMateria"
+                                    class="btn btn-outline-danger removeJSON">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                    </svg>
+                                </button>
+                                <select name="edificio" id="selectHorario" class="inputs"></select>
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Docente:</span><select name="docente" id="selectDocente"
+                                    class="inputs">
+                                    <% docentes.forEach(e=> { %>
+                                        <option value="<%=e.ID%>">
+                                            <%=e.Nombre%>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Edificio:</span><select name="edificio"
+                                    id="selectEdificioAddMateria" class="inputs">
+                                    <% edificios.forEach(e=> { %>
+                                        <option value="<%=e.ID%>">
+                                            <%=e.Nombre%>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Aula:</span><select name="edificio" id="selectAulaAddMateria"
+                                    class="inputs">
+                                    <% aulas.forEach(e=> { %>
+                                        <option value="<%=e.ID%>" data-IDEdificio="<%=e.ID_Edificio%>"
+                                            data-NombreAula="<%=e.Nombre%>">
+                                            <%=e.Nombre%>
+                                        </option>
+                                        <% }); %>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fooderModal">
+                            <button type="button" id="btnCreateMateria"
+                                class="btn btn-success addButton">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="subModalAddFechaMateria" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nuevo Docente</span>
+                        </div>
+                        <button id="closeFechaMateria" class="btn btn-outline-danger closeSubModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="bodyModal">
+                        <div class="rowFiles">
+                            <span class="simpleText">Día:</span><select id="selectDiaFechaMateria"
+                                class="inputs"></select>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Hora:</span><select id="selectHoraFechaMateria"
+                                class="inputs"></select>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Minuto:</span><select id="selectMinutoFechaMateria"
+                                class="inputs"></select>
+                        </div>
+                    </div>
+                    <div class="fooderModal">
+                        <button type="button" id="btnAgregarFechaHorario"
+                            class="btn btn-success addButton">Agregar</button>
+                    </div>
+                </div>
+
+
+                <div id="modalAddDocentes" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nuevo Docente</span>
+                        </div>
+                        <button id="closeModalDocentes" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <form action="/home/addDocente" method="post">
+                        <div class="bodyModal">
+                            <div class="rowFiles">
+                                <span class="simpleText">Nombre:</span><input name="nombre" type="text" class="inputs">
+                            </div>
+                        </div>
+                        <div class="fooderModal">
+                            <button type="submit" class="btn btn-success addButton">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div id="modalAddEdificios" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nuevo Edificio</span>
+                        </div>
+                        <button id="closeModalEdificios" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <form action="/home/addEdificio" method="post">
+                        <div class="bodyModal">
+                            <div class="rowFiles">
+                                <span class="simpleText">Nombre:</span><input id="nombreEdificio " name="nombre"
+                                    type="text" class="inputs">
+                            </div>
+                        </div>
+                        <div class="fooderModal">
+                            <button type="submit" class="btn btn-success addButton">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="modalAddAulas" class="modalPersonal animate__animated  no-visible">
+                    <div class="headModal">
+                        <div class="titleModal">
+                            <span>Nueva Aula</span>
+                        </div>
+                        <button id="closeModalAulas" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <form action="/home/addAula" method="post">
+                        <div class="bodyModal">
+                            <div class="rowFiles">
+                                <span class="simpleText">Nombre:</span><input name="nombre" type="text" class="inputs">
+                            </div>
+                            <div class="rowFiles">
+                                <span class="simpleText">Edificio:</span>
+                                <select name="edificio" id="selectEdificio" class="inputs">
+                                    <% edificios.forEach(e=> { %>
+                                        <option value="<%=e.ID%>">
+                                            <%=e.Nombre%>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fooderModal">
+                            <button type="submit" class="btn btn-success addButton">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!--Sripts-->
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+                integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+                integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+                crossorigin="anonymous"></script>
+            <script type="module"> console.log('hi')</script>
+            <script src="/js/index.js"></script>
 </body>
 
 </html>

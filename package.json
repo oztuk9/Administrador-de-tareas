@@ -15,6 +15,7 @@
   "author": "Oscar Eduardo Macias Martinez",
   "license": "ISC",
   "devDependencies": {
+    "@web/dev-server": "^0.1.31",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
@@ -30,6 +31,9 @@
     "express-session": "^1.17.2",
     "mysql": "^2.18.1",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "promise-mysql": "^5.2.0",
+    "sweetalert2": "^11.4.17",
+    "xmlhttprequest": "^1.8.0"
   }
 }
