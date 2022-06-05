@@ -20,7 +20,7 @@
 
     <!--Sidebar-->
 
-    <div id="sidebar" class="div-sidebar no-visible animate__animated">
+    <div id="sidebar" class="div-sidebar animate__animated">
         <div class="div-headSidebar">
             <div class="infoSidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-list"
@@ -60,7 +60,7 @@
 
     <!--Navbar-->
     <nav class="navPersonal">
-        <button id="btnOpenSidebar" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="50"
+        <button id="btnOpenSidebar" class="btn btn-secondary no-visible"><svg xmlns="http://www.w3.org/2000/svg" width="50"
                 height="50" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
                     d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z">
@@ -82,10 +82,8 @@
         </div>
         <%}%>
 
+        
             <!--Modales-->
-
-
-
             <div class="divModales no-visible">
 
 
@@ -130,33 +128,40 @@
                     </div>
                     <div class="bodyModal">
                         <div class="rowFiles">
-                            <span class="simpleText">Nombre:</span><input type="text" class="littlerInputs">
+                            <span class="simpleText">Nombre:</span><input type="text" id="inputNombreTarea" class="littlerInputs">
                         </div>
                         <div class="rowFiles">
                             <span class="simpleText">Descripcion:</span>
                         </div>
                         <div class="rowFiles">
-                            <textarea name="descripcionTarea" id="descripcionTarea" rows="5"></textarea>
+                            <textarea name="descripcionTarea" id="textAreadescripcionTarea" rows="5"></textarea>
                         </div>
                         <div class="rowFiles">
-                            <span class="simpleText">Color:</span><input type="color" class="littlerInputs"
+                            <span class="simpleText">Color:</span><input type="color" id="inputColorTarea" class="littlerInputs"
                                 value="#ffffff">
                         </div>
                         <div class="rowFiles">
                             <span class="simpleText">Fecha:</span>
-                            <button id="addFechaTarea" class="btn btn-secondary "><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                    class="bi bi-calendar-week" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
-                                    <path
-                                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                                </svg></button>
-                            <span class="simpleText fechaTarea">Sin fecha</span>
+                            <input type="datetime-local" id="inputFechaTarea" class="seleccionarFechaHora">
                         </div>
                         <div class="rowFiles">
-                            <span class="simpleText">Materia:</span><select name="docente"
-                                class="littlerInputs"></select>
+                            <span class="simpleText">Importancia:</span>
+                            <select id="selectImportanciaTrea" class="littlerInputs">
+                                <option value="0">Poco Importante</option>
+                                <option value="1">Importante</option>
+                                <option value="3">Muy Importante</option>
+                            </select>
+                        </div>
+                        <div class="rowFiles">
+                            <span class="simpleText">Materia:</span>
+                            <select name="docente" id="selectMateria"
+                                class="littlerInputs">
+                                    <% materias.forEach(e=> { %>
+                                        <option value="<%=e.ID%>">
+                                            <%=e.Nombre%>
+                                        </option>
+                                        <% }); %>
+                            </select>
                         </div>
                         <div class="rowFiles">
                             <span class="simpleText">Subtareas:</span>
@@ -181,7 +186,7 @@
                         </div>
                     </div>
                     <div class="fooderModal">
-                        <button class="btn btn-success addButton">Agregar</button>
+                        <button type="button" id="btnCrearTarea" class="btn btn-success addButton">Agregar</button>
                     </div>
                 </div>
 
@@ -324,15 +329,26 @@
                     </div>
                     <div class="bodyModal">
                         <div class="rowFiles">
-                            <span class="simpleText">Día:</span><select id="selectDiaFechaMateria"
+                            <span class="simpleText">Día:</span><select id="selectDiaFechaMateriaComienza"
+                                class="inputs"></select>
+                        </div>
+                        <span class="simpleText">Comienza</span>
+                        <div class="rowFiles">
+                            <span class="simpleText">Hora:</span><select id="selectHoraFechaMateriaComienza"
                                 class="inputs"></select>
                         </div>
                         <div class="rowFiles">
-                            <span class="simpleText">Hora:</span><select id="selectHoraFechaMateria"
+                            <span class="simpleText">Minuto:</span><select id="selectMinutoFechaMateriaComienza"
+                                class="inputs"></select>
+                        </div>
+
+                        <span class="simpleText">Termina</span>
+                        <div class="rowFiles">
+                            <span class="simpleText">Hora:</span><select id="selectHoraFechaMateriaTermina"
                                 class="inputs"></select>
                         </div>
                         <div class="rowFiles">
-                            <span class="simpleText">Minuto:</span><select id="selectMinutoFechaMateria"
+                            <span class="simpleText">Minuto:</span><select id="selectMinutoFechaMateriaTermina"
                                 class="inputs"></select>
                         </div>
                     </div>
@@ -442,6 +458,7 @@
                 crossorigin="anonymous"></script>
             <script type="module"> console.log('hi')</script>
             <script src="/js/index.js"></script>
+            <script src="/js/home.js"></script>
 </body>
 
 </html>

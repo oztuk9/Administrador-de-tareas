@@ -189,6 +189,7 @@ app.get('/home', isLoggedUser,
         let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ?`
         let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
         let queryDocentes = `SELECT * FROM docente WHERE ID_Usuario = ?`
+        let queryMateria = `SELECT ID, Nombre FROM materia WHERE ID_Usuario = ?`
         //Query para obtener los edificios de la base de datos
         await pool.query(queryEdificios, [req.user.ID], async (error, resultsEdificio, fields) => {
             if (error) throw error;
@@ -196,17 +197,182 @@ app.get('/home', isLoggedUser,
                 if (error) throw error;
                 await pool.query(queryDocentes, [req.user.ID], async (error, resultsDocentes, fields) => {
                     if (error) throw error;
-                    console.log(resultsDocentes);
-                    res.render(path.join(__dirname, 'html/home.ejs'), {
-                        user: req.user,
-                        edificios: resultsEdificio,
-                        aulas: resultsAula,
-                        docentes: resultsDocentes
-                    });
+                    await pool.query(queryMateria, [req.user.ID], async (error, resultsMaterias, fields) => {
+                        if (error) throw error;
+                        console.log(resultsMaterias);
+                        res.render(path.join(__dirname, 'html/home.ejs'), {
+                            user: req.user,
+                            edificios: resultsEdificio,
+                            aulas: resultsAula,
+                            docentes: resultsDocentes,
+                            materias: resultsMaterias
+                        });
+                    })
                 })
             })
         })
     });
+
+
+
+/*Edificio*/
+
+app.get('/edificio', isLoggedUser, async function (req, res) {
+    let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ? ORDER BY nombre`
+    await pool.query(queryEdificios, [req.user.ID], async (error, resultsEdificio, fields) => {
+        if (error) throw error;
+        res.render(path.join(__dirname, 'html/edificio.ejs'), {
+            user: req.user,
+            edificios: resultsEdificio
+        });
+    })
+});
+
+app.get('/edificio/delete/:id',isLoggedUser,async (req, res) => {
+    let queryEdificios = `DELETE FROM edificio WHERE ID= ?`
+    const { id } = req.params;
+    await pool.query(queryEdificios, [id], async (error, resultsEdificio, fields) => {
+        if (error) {
+            req.flash('Success', 'El edificio no se puede eliminar por que hay aulas relacionadas')
+            res.redirect('/edificio')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Edificio eliminado')
+        res.redirect('/edificio')
+    })
+})
+
+
+
+
+/*Aula*/
+
+app.get('/aula', isLoggedUser, async function (req, res) {
+    let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
+    await pool.query(queryAulas, [req.user.ID], async (error, resultsAula, fields) => {
+        if (error) throw error;
+        res.render(path.join(__dirname, 'html/aula.ejs'), {
+            user: req.user,
+            aula: resultsAula
+        });
+    })
+});
+
+app.get('/aula/delete/:id',isLoggedUser,async (req, res) => {
+    let queryEdificios = `DELETE FROM aula WHERE ID= ?`
+    const { id } = req.params;
+    await pool.query(queryEdificios, [id], async (error, resultsEdificio, fields) => {
+        if (error) {
+            req.flash('Success', 'No se pudo eliminar el aula por que hay materias relacionadas')
+            res.redirect('/aula')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Aula eliminada')
+        res.redirect('/aula')
+    })
+})
+
+
+
+/*Docente*/
+
+app.get('/docente', isLoggedUser, async function (req, res) {
+    let queryDocentes = `SELECT * FROM docente WHERE ID_Usuario = ?`
+    await pool.query(queryDocentes, [req.user.ID], async (error, resultsDocente, fields) => {
+        if (error) throw error;
+        res.render(path.join(__dirname, 'html/docente.ejs'), {
+            user: req.user,
+            docente: resultsDocente
+        });
+    })
+});
+
+app.get('/docente/delete/:id',isLoggedUser,async (req, res) => {
+    let queryEdificios = `DELETE FROM docente WHERE ID= ?`
+    const { id } = req.params;
+    await pool.query(queryEdificios, [id], async (error, resultsDocente, fields) => {
+        if (error) {
+            req.flash('Success', 'No se pudo eliminar el docente por que hay materias relacionadas')
+            res.redirect('/docente')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Docente eliminado')
+        res.redirect('/docente')
+    })
+})
+
+
+
+
+/*Materia*/
+
+app.get('/materia', isLoggedUser, async function (req, res) {
+    let queryMateria = `SELECT * FROM materia WHERE ID_Usuario = ?`
+    await pool.query(queryMateria, [req.user.ID], async (error, resultsMateria, fields) => {
+        if (error) throw error;
+        res.render(path.join(__dirname, 'html/materia.ejs'), {
+            user: req.user,
+            materia : resultsMateria
+        });
+    })
+});
+
+app.get('/materia/delete/:id',isLoggedUser,async (req, res) => {
+    let queryEdificios = `DELETE FROM materia WHERE ID= ?`
+    const { id } = req.params;
+    await pool.query(queryEdificios, [id], async (error, resultsDocente, fields) => {
+        if (error) {
+            req.flash('Success', 'No se pudo eliminar la materia por que hay tareas relacionadas')
+            res.redirect('/materia')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Materia eliminada')
+        res.redirect('/materia')
+    })
+})
+
+
+
+
+
+
+/*Tarea*/
+
+app.get('/tarea', isLoggedUser, async function (req, res) {
+    let queryTareas = `SELECT * FROM tarea WHERE ID_Usuario = ?`
+    await pool.query(queryTareas, [req.user.ID], async (error, resultsTarea, fields) => {
+        if (error) throw error;
+        res.render(path.join(__dirname, 'html/tarea.ejs'), {
+            user: req.user,
+            tarea : resultsTarea
+        });
+    })
+});
+
+app.get('/tarea/delete/:id',isLoggedUser,async (req, res) => {
+    let queryEdificios = `DELETE FROM tarea WHERE ID= ?`
+    const { id } = req.params;
+    await pool.query(queryEdificios, [id], async (error, resultsDocente, fields) => {
+        if (error) {
+            req.flash('Success', 'No se pudo eliminar la tarea')
+            res.redirect('/tarea')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Tarea eliminada')
+        res.redirect('/tarea')
+    })
+})
+
+
+
+
+
+/*Inicio de sesión*/
 
 app.get('/auth', isNotLoggedUser, function (req, res) {
     res.render(path.join(__dirname, 'html/identificacion.ejs'));
@@ -274,7 +440,7 @@ app.post('/home/addDocente', jsonParser, async (req, res) => {
     })
 });
 
-app.post('/home/addFechaMateria', async function (req, res) {
+app.post('/home/addMateria', async function (req, res) {
     count = 0
     let queryMateria = 'INSERT INTO materia SET ?'
     let queryRelacionMateriaAula = 'INSERT INTO Relacion_materia_aula SET ?'
@@ -286,7 +452,7 @@ app.post('/home/addFechaMateria', async function (req, res) {
         ID_Docente: req.body[0].ID_Docente,
         ID_Usuario: req.user.ID
     }
-    await pool.query(queryMateria, dataMateria,async (error, resultsMateria, fields) => {
+    await pool.query(queryMateria, dataMateria, async (error, resultsMateria, fields) => {
         if (error) throw error;
         let dataRelacion_materia_aula = {
             ID_Aula: req.body[0].ID_Aula,
@@ -298,27 +464,73 @@ app.post('/home/addFechaMateria', async function (req, res) {
         })
 
         for (const e of req.body) {
-            if (count<=0) {
+            if (count <= 0) {
                 console.log('Count es menor que 0', count);
                 ++count
-            }else{
+            } else {
                 let dataHorario = {
                     Dia: e.Dia,
-                    Hora: e.Hora,
+                    HoraComienza: e.HoraComienza,
+                    HoraTermina: e.HoraTermina,
                     ID_Materia: resultsMateria.insertId
                 }
-                console.log('Insertara el siguiente dato: ',dataHorario);
+                console.log('Insertara el siguiente dato: ', dataHorario);
                 await pool.query(queryHorarioMateria, dataHorario, (error, resultsHorario, fields) => {
                     if (error) throw error;
                     console.log('Se ejecuto el query para insertar HORARIO');
                 })
             }
-          }
-          req.flash('Success', 'Nueva materia agregada')
-          console.log('Este es el resultado');
-          console.log(resultsMateria);
-          console.log('Fue enviado la materia');
-          console.log(req.body);
-          res.redirect(`/home`)
+        }
+        req.flash('Success', 'Nueva materia agregada')
+        console.log('Este es el resultado');
+        console.log(resultsMateria);
+        console.log('Fue enviado la materia');
+        console.log(req.body);
+        res.redirect(`/home`)
+    })
+});
+
+
+app.post('/home/addTarea', async function (req, res) {
+    count = 0
+    let queryTarea = 'INSERT INTO tarea SET ?'
+    let querySubtarea = 'INSERT INTO subtarea SET ?'
+
+    let dataTarea = {
+        Nombre: req.body[0].Nombre,
+        Descripcion: req.body[0].Descripcion,
+        Color: req.body[0].Color,
+        Fecha: req.body[0].Fecha,
+        Importancia : req.body[0].Importancia,
+        ID_Materia: req.body[0].ID_Materia,
+        ID_Usuario: req.user.ID
+    }
+
+    await pool.query(queryTarea, dataTarea, async (error, resultsTarea, fields) => {
+        if (error) throw error;
+        for (const e of req.body) {
+            if (count <= 0) {
+                console.log('Count es menor que 0', count);
+                ++count
+            } else {
+                let dataSubtarea = {
+                    Nombre: e.Nombre,
+                    Descripcion: e.Descripcion,
+                    ID_Tarea: resultsTarea.insertId
+                }
+                console.log('Insertara el siguiente dato: ', dataSubtarea);
+                await pool.query(querySubtarea, dataSubtarea, (error, resultsSubtarea, fields) => {
+                    if (error) throw error;
+                    console.log('Se ejecuto el query para insertar subtarea');
+                    console.log(resultsSubtarea);
+                })
+            }
+        }
+        req.flash('Success', 'Nueva tarea agregada')
+        console.log('Este es el resultado');
+        console.log(resultsTarea);
+        console.log('Fue enviado la tarea');
+        console.log(req.body);
+        res.redirect(`/home`)
     })
 });

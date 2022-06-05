@@ -1,6 +1,15 @@
 .elentos {
+  float: left;
+  width: 80%;
   color: #757575;
 }
+
+.elementos {
+  float: left;
+  width: 65%;
+  color: #757575;
+}
+
 
 body {
   background-color: #191a1f;
@@ -125,11 +134,6 @@ textarea{
   float: right;
 }
 
-.elentos {
-  float: left;
-  width: 80%;
-}
-
 #sidebarUsuario{
   width: 100%;
 }
@@ -237,6 +241,18 @@ textarea{
   position: absolute;
   display: flex;
   justify-content: center;
+}
+
+.seleccionarFechaHora{
+  position: absolute;
+  right: 0;
+  width: 200px;
+  height: 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 
