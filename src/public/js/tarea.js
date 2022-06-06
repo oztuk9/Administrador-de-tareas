@@ -104,7 +104,8 @@ const addEventListenerOpenTarea = () => {
                 break;
         }
         console.log(e.dataset);
-        registroSeleccionado = id = e.id
+        console.log(e);
+        let id= e.id
         let nombre = e.dataset.nombre
         let descripcion = e.dataset.descripcion
         let fecha = new Date(e.dataset.fecha)
@@ -112,6 +113,7 @@ const addEventListenerOpenTarea = () => {
         const tarea = document.getElementById(id)
         console.log(tarea);
         tarea.addEventListener('click', e => {
+            registroSeleccionado = id
             textoNombreTarea.innerText = nombre
             textoNombreDescripcion.innerText = descripcion
             textoNombreFecha.innerText = fecha.toLocaleString('en-GB', { timeZone: 'UTC' })
@@ -161,7 +163,7 @@ btnSuccess.addEventListener('click', e => {
     }
     closeModal(nombreModal)
     setTimeout(function () {
-        window.location.href = "/edificio"
+        window.location.href = "/tarea"
     }, 500);
 
 })
@@ -266,13 +268,16 @@ const sendFormWithJSONTarea = () => {
 
 
 btnFinished.addEventListener('click', e => {
+    console.log(registroSeleccionado);
     end = {
         id: registroSeleccionado,
         Importancia: "4"
     }
     closeModal(nombreModal)
     finished(end)
-
+    setTimeout(function () {
+        window.location.href = "/tarea"
+    }, 500);
 })
 
 const finished = (data) => {
