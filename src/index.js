@@ -317,7 +317,7 @@ app.get('/materia', isLoggedUser, async function (req, res) {
     let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ? ORDER BY nombre`
     let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
     let queryDocentes = `SELECT * FROM docente WHERE ID_Usuario = ?`
-    let queryMateria = `SELECT m.ID, m.Nombre, m.Color, m.Clave, m.ID_Docente, a.ID AS ID_Aula, a.ID_Edificio FROM aula AS a INNER JOIN relacion_materia_aula AS RMA ON a.ID = RMA.ID_Aula INNER JOIN materia as m ON m.ID=RMA.ID_Materia ORDER BY m.Nombre`
+    let queryMaterias = `SELECT ID, Nombre FROM materia WHERE ID_Usuario = ?`
     let queryHorarios = `SELECT * FROM horario`
 
 
@@ -327,7 +327,7 @@ app.get('/materia', isLoggedUser, async function (req, res) {
             if (error) throw error;
             await pool.query(queryDocentes, [req.user.ID], async (error, resultsDocentes, fields) => {
                 if (error) throw error;
-                await pool.query(queryMateria, [req.user.ID], async (error, resultsMaterias, fields) => {
+                await pool.query(queryMaterias, [req.user.ID], async (error, resultsMaterias, fields) => {
                     if (error) throw error;
                     await pool.query(queryHorarios, [req.user.ID], async (error, resultsHorarios, fields) => {
                         if (error) throw error;
@@ -471,7 +471,7 @@ app.post('/home/addAula', jsonParser, async (req, res) => {
     let query = 'INSERT INTO aula SET ?'
     let data = {
         Nombre: req.body.nombre,
-        ID_Edificio: req.body.ID_Edificio
+        ID_Edificio: req.body.edificio
     }
     console.log(data);
     await pool.query(query, data, (error, results, fields) => {
