@@ -32,6 +32,7 @@ const inputFechaTarea = document.getElementById('inputFechaTarea')
 
 
 /*Selects*/
+//Materia
 const selectDiaFechaMateriaComienza = document.getElementById('selectDiaFechaMateriaComienza')
 const selectHoraFechaMateriaComienza = document.getElementById('selectHoraFechaMateriaComienza')
 const selectMinutoFechaMateriaComienza = document.getElementById('selectMinutoFechaMateriaComienza')
@@ -40,6 +41,7 @@ const selectHoraFechaMateriaTermina = document.getElementById('selectHoraFechaMa
 const selectMinutoFechaMateriaTermina = document.getElementById('selectMinutoFechaMateriaTermina')
 
 
+//Tareas
 const selectHorario = document.getElementById('selectHorario')
 const selectDocente = document.getElementById('selectDocente')
 const selectAulaAddMateria = document.getElementById('selectAulaAddMateria')
@@ -419,7 +421,9 @@ btnCreateMateria.addEventListener('click',e=>{
     })
     console.log(finalArrayQueryMaterias);
     sendFormWithJSONMateria();
-    window.location.href = "/home"
+    setTimeout(function () {
+        window.location.href = "/home"
+    }, 500);
 })
 
 const sendFormWithJSONMateria = () => {

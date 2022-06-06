@@ -35,8 +35,8 @@
 
         <!--Usuario-->
 
-        <div id="goHome" class="div-elementos" onclick="location.href='/home'">
-            <div class="elentos">
+        <div id="goHome" class="div-elementos">
+            <div onclick="location.href='/home'" class="elentos">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-list"
                     viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -45,11 +45,16 @@
                 </svg>
                 <span class="letasMenu">Menu</span>
             </div>
+            <button id="addNew" class="btn btn-outline-success add-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"></path>
+                </svg>
+            </button>
         </div>
         <div id="bodySidebar">
             <% docente.forEach(e=> { %>
                 <div class="div-elementos">
-                    <div id="<%=e.ID%>" class="elementos">
+                    <div id="<%=e.ID%>" data-nombre="<%=e.Nombre%>" class="elementos">
                         <span class="letasMenu">
                             <%=e.Nombre%>
                         </span>
@@ -104,31 +109,29 @@
             <div class="divModales no-visible">
 
 
-                <div id="modalUsuario" class="modalPersonal animate__animated  no-visible">
+                <div id="modalDocentes" class="modalPersonal animate__animated  no-visible">
                     <div class="headModal">
                         <div class="titleModal">
-                            <span>
-                                <%=user.Nombre%>
-                            </span>
+                            <span id="textoTitulo">Nuevo Docente</span>
                         </div>
-                        <button id="closeModalUsuario" class="btn btn-outline-danger closeModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        <button id="btnCloseModal" class="btn btn-outline-danger closeModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                 class="bi bi-x-square-fill" viewBox="0 0 16 16">
                                 <path
                                     d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
                             </svg>
                         </button>
                     </div>
-                    <div class="bodyModal">
-                        <span>BODY MODAL</span>
-                    </div>
-                    <div class="fooderModal">
-                        <a href="/logout">
-                            <button class="btn btn-danger">Cerrar sesión</button>
-                        </a>
-                    </div>
+                        <div class="bodyModal">
+                            <div class="rowFiles">
+                                <span class="simpleText">Nombre:</span><input id="inputNombre" name="nombre"
+                                    type="text" class="inputs">
+                            </div>
+                        </div>
+                        <div class="fooderModal">
+                            <button type="button" id="btnSuccess" class="btn btn-success addButton">Agregar</button>
+                        </div>
                 </div>
-            </div>
 
             <!--Sripts-->
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"

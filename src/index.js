@@ -186,7 +186,7 @@ app.get('/home', isLoggedUser,
     // Funcion que se ejecuta cuando se manda a llamar a la ruta
     async function (req, res) {
         //Renderisamos el archivo .ejs y enviamos las variables
-        let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ?`
+        let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ? ORDER BY nombre`
         let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
         let queryDocentes = `SELECT * FROM docente WHERE ID_Usuario = ?`
         let queryMateria = `SELECT ID, Nombre FROM materia WHERE ID_Usuario = ?`
@@ -199,7 +199,6 @@ app.get('/home', isLoggedUser,
                     if (error) throw error;
                     await pool.query(queryMateria, [req.user.ID], async (error, resultsMaterias, fields) => {
                         if (error) throw error;
-                        console.log(resultsMaterias);
                         res.render(path.join(__dirname, 'html/home.ejs'), {
                             user: req.user,
                             edificios: resultsEdificio,
@@ -250,12 +249,17 @@ app.get('/edificio/delete/:id',isLoggedUser,async (req, res) => {
 
 app.get('/aula', isLoggedUser, async function (req, res) {
     let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
+    let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ? ORDER BY nombre`
     await pool.query(queryAulas, [req.user.ID], async (error, resultsAula, fields) => {
         if (error) throw error;
-        res.render(path.join(__dirname, 'html/aula.ejs'), {
-            user: req.user,
-            aula: resultsAula
-        });
+        await pool.query(queryEdificios, [req.user.ID], async (error, resultsEdificio, fields) => {
+            if (error) throw error;
+            res.render(path.join(__dirname, 'html/aula.ejs'), {
+                user: req.user,
+                aula: resultsAula,
+                edificios :resultsEdificio
+            });
+        })
     })
 });
 
@@ -310,13 +314,35 @@ app.get('/docente/delete/:id',isLoggedUser,async (req, res) => {
 /*Materia*/
 
 app.get('/materia', isLoggedUser, async function (req, res) {
-    let queryMateria = `SELECT * FROM materia WHERE ID_Usuario = ?`
-    await pool.query(queryMateria, [req.user.ID], async (error, resultsMateria, fields) => {
+    let queryEdificios = `SELECT * FROM edificio WHERE ID_Usuario = ? ORDER BY nombre`
+    let queryAulas = `SELECT a.ID,a.Nombre,a.ID_Edificio FROM aula AS a INNER JOIN edificio AS e ON e.ID=A.ID_Edificio WHERE ID_Usuario = ?`
+    let queryDocentes = `SELECT * FROM docente WHERE ID_Usuario = ?`
+    let queryMateria = `SELECT m.ID, m.Nombre, m.Color, m.Clave, m.ID_Docente, a.ID AS ID_Aula, a.ID_Edificio FROM aula AS a INNER JOIN relacion_materia_aula AS RMA ON a.ID = RMA.ID_Aula INNER JOIN materia as m ON m.ID=RMA.ID_Materia ORDER BY m.Nombre`
+    let queryHorarios = `SELECT * FROM horario`
+
+
+    await pool.query(queryEdificios, [req.user.ID], async (error, resultsEdificio, fields) => {
         if (error) throw error;
-        res.render(path.join(__dirname, 'html/materia.ejs'), {
-            user: req.user,
-            materia : resultsMateria
-        });
+        await pool.query(queryAulas, [req.user.ID], async (error, resultsAula, fields) => {
+            if (error) throw error;
+            await pool.query(queryDocentes, [req.user.ID], async (error, resultsDocentes, fields) => {
+                if (error) throw error;
+                await pool.query(queryMateria, [req.user.ID], async (error, resultsMaterias, fields) => {
+                    if (error) throw error;
+                    await pool.query(queryHorarios, [req.user.ID], async (error, resultsHorarios, fields) => {
+                        if (error) throw error;
+                        res.render(path.join(__dirname, 'html/materia.ejs'), {
+                            user: req.user,
+                            edificios: resultsEdificio,
+                            aulas: resultsAula,
+                            docentes: resultsDocentes,
+                            materias: resultsMaterias,
+                            horarios : resultsHorarios
+                        });
+                    })
+                })
+            })
+        })
     })
 });
 
@@ -343,13 +369,18 @@ app.get('/materia/delete/:id',isLoggedUser,async (req, res) => {
 /*Tarea*/
 
 app.get('/tarea', isLoggedUser, async function (req, res) {
-    let queryTareas = `SELECT * FROM tarea WHERE ID_Usuario = ?`
+    let queryTareas = `SELECT m.Nombre AS nombre_materia, t.* FROM tarea AS t INNER JOIN materia AS m ON T.ID_Materia=M.ID WHERE t.ID_Usuario = ?`
+    let queryMaterias = `SELECT ID, Nombre FROM materia WHERE ID_Usuario = ?`
     await pool.query(queryTareas, [req.user.ID], async (error, resultsTarea, fields) => {
         if (error) throw error;
-        res.render(path.join(__dirname, 'html/tarea.ejs'), {
-            user: req.user,
-            tarea : resultsTarea
-        });
+        await pool.query(queryMaterias, [req.user.ID], async (error, resultsMaterias, fields) => {
+            if (error) throw error;
+            res.render(path.join(__dirname, 'html/tarea.ejs'), {
+                user: req.user,
+                tarea : resultsTarea,
+                materias : resultsMaterias
+            });
+        })
     })
 });
 
@@ -383,6 +414,13 @@ app.get('/logout', isLoggedUser, function (req, res) {
     res.redirect('/auth')
 });
 
+
+
+
+
+
+
+
 /*Post*/
 
 //Login & Register
@@ -409,11 +447,31 @@ app.post('/home/addEdificio', jsonParser, async (req, res) => {
     })
 });
 
+
+app.post('/edificio/update',isLoggedUser,async (req, res) => {
+    let queryEdificios = `UPDATE edificio SET ? WHERE ID= ?`
+    const {id, nombre} = req.body;
+    const dataUpdate = {
+        nombre
+    }
+    await pool.query(queryEdificios, [dataUpdate,id], async (error, resultsEdificio, fields) => {
+        if (error) { 
+            req.flash('Success', 'El edificio no se pudo actualizar')
+            res.redirect('/edificio')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Edificio actualizado')
+        res.redirect('/edificio')
+    })
+})
+
 app.post('/home/addAula', jsonParser, async (req, res) => {
+    console.log(req.body);
     let query = 'INSERT INTO aula SET ?'
     let data = {
         Nombre: req.body.nombre,
-        ID_Edificio: req.body.edificio
+        ID_Edificio: req.body.ID_Edificio
     }
     console.log(data);
     await pool.query(query, data, (error, results, fields) => {
@@ -425,6 +483,28 @@ app.post('/home/addAula', jsonParser, async (req, res) => {
         }, 500);
     })
 })
+
+app.post('/aula/update',isLoggedUser,async (req, res) => {
+    let queryAulas = `UPDATE aula SET ? WHERE ID= ?`
+    const {id, nombre, ID_Edificio} = req.body;
+    const dataUpdate = {
+        nombre,
+        ID_Edificio
+    }
+    await pool.query(queryAulas, [dataUpdate,id], async (error, resultsEdificio, fields) => {
+        if (error) { 
+            req.flash('Success', 'El edificio no se pudo actualizar')
+            res.redirect('/aula')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Edificio actualizado')
+        res.redirect('/aula')
+    })
+})
+
+
+
 
 app.post('/home/addDocente', jsonParser, async (req, res) => {
     let query = 'INSERT INTO docente SET ?'
@@ -439,6 +519,27 @@ app.post('/home/addDocente', jsonParser, async (req, res) => {
         res.redirect(`/home`)
     })
 });
+
+app.post('/docente/update',isLoggedUser,async (req, res) => {
+    let queryDocentes = `UPDATE docente SET ? WHERE ID= ?`
+    const {id, nombre} = req.body;
+    const dataUpdate = {
+        nombre
+    }
+    await pool.query(queryDocentes, [dataUpdate,id], async (error, resultsEdificio, fields) => {
+        if (error) { 
+            req.flash('Success', 'El docente no se pudo actualizar')
+            res.redirect('/docente')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Docente actualizado')
+        res.redirect('/docente')
+    })
+})
+
+
+
 
 app.post('/home/addMateria', async function (req, res) {
     count = 0
@@ -534,3 +635,22 @@ app.post('/home/addTarea', async function (req, res) {
         res.redirect(`/home`)
     })
 });
+
+
+app.post('/tarea/finished',isLoggedUser,async (req, res) => {
+    let queryUpdateTarea = `UPDATE tarea SET ? WHERE ID= ?`
+    const {id, Importancia} = req.body;
+    const dataUpdate = {
+        Importancia
+    }
+    await pool.query(queryUpdateTarea, [dataUpdate,id], async (error, resultsEdificio, fields) => {
+        if (error) { 
+            req.flash('Success', 'No se pudo finalizar la tarea')
+            res.redirect('/tarea')
+            throw error
+        }
+        console.log(id);
+        req.flash('Success', 'Tarea finalizada')
+        res.redirect('/tarea')
+    })
+})

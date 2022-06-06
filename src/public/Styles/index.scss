@@ -217,7 +217,7 @@ textarea{
   padding-top: 5px;
   padding-bottom: 5px;
   width: 100%;
-  align-items: center;
+  vertical-align: text-top;
 }
 
 .colorpick-eyedropper-input-trigger{
@@ -229,7 +229,15 @@ textarea{
   width: 400px;
 }
 
+#modalMaterias{
+  width: 400px;
+}
+
 #modalAddTareas{
+  width: 400px;
+}
+
+#modalTareas{
   width: 400px;
 }
 
@@ -255,7 +263,25 @@ textarea{
   -o-border-radius: 10px;
 }
 
+.poco-importante{
+  background-color:#0C6EFD
+}
 
+.importante{
+  background-color: #d4a407
+}
+
+.muy-importante{
+  background-color: #DC3545;
+}
+
+.completados{
+  background-color: #198754;
+}
+
+.estado{
+  color: #ffffff;
+}
 /*Responsibe*/
 
 @media only screen and (max-height: 600px) {

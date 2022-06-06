@@ -40,8 +40,8 @@
 
         <!--Usuario-->
 
-        <div id="goHome" class="div-elementos" onclick="location.href='/home'">
-            <div class="elentos">
+        <div id="goHome" class="div-elementos">
+            <div onclick="location.href='/home'" class="elentos">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-list"
                     viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -50,6 +50,11 @@
                 </svg>
                 <span class="letasMenu">Menu</span>
             </div>
+            <button id="addNew" class="btn btn-outline-success add-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"></path>
+                </svg>
+            </button>
         </div>
         <div id="bodySidebar">
             <% edificios.forEach(e=> { %>
@@ -109,12 +114,12 @@
             <div class="divModales no-visible">
 
 
-                <div id="modalAddEdificios" class="modalPersonal animate__animated  no-visible">
+                <div id="modalEdificios" class="modalPersonal animate__animated  no-visible">
                     <div class="headModal">
                         <div class="titleModal">
-                            <span>Nuevo Edificio</span>
+                            <span id="textoTitulo">Nuevo Edificio</span>
                         </div>
-                        <button id="closeModalEdificios" class="btn btn-outline-danger closeModal">
+                        <button id="btnCloseModal" class="btn btn-outline-danger closeModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                                 class="bi bi-x-square-fill" viewBox="0 0 16 16">
                                 <path
@@ -122,17 +127,15 @@
                             </svg>
                         </button>
                     </div>
-                    <form action="/edificio/editar" method="post">
                         <div class="bodyModal">
                             <div class="rowFiles">
-                                <span class="simpleText">Nombre:</span><input id="nombreEdificio" name="nombre"
+                                <span class="simpleText">Nombre:</span><input id="inputNombre" name="nombre"
                                     type="text" class="inputs">
                             </div>
                         </div>
                         <div class="fooderModal">
-                            <button type="submit" class="btn btn-success addButton">Agregar</button>
+                            <button type="button" id="btnSuccess" class="btn btn-success addButton">Agregar</button>
                         </div>
-                    </form>
                 </div>
 
 
